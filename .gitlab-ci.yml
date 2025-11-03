@@ -1,17 +1,24 @@
 image: gradle:7.5.0-jdk11-alpine
+
 stages:
   - build
   - test
+
 variables:
   GIT_SSL_NO_VERIFY: "true"
+
 before_script:
+  - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+  - export PATH=$JAVA_HOME/bin:$PATH
   - echo "Start Automated Build"
   - export GRADLE_USER_HOME=`pwd`/.gradle
   - chmod +x ./gradlew
+
 cache:
   paths:
     - .gradle/wrapper
     - .gradle/caches
+
 build:
   stage: build
   script:
@@ -22,23 +29,26 @@ build:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
+
 test_black_box:
   stage: test
-  tags:
-    - miguel_test_runner
   script:
     - ./gradlew test
+  tags:
+    - miguel_test_runner
   artifacts:
     paths:
       - build/test-results/test/TEST-*.xml
+
 test_white_box:
   stage: test
-  tags:
-    - miguel_test_runner
   script:
     - ./gradlew jacocoTestReport
+  tags:
+    - miguel_test_runner
   artifacts:
     paths:
       - build/reports/jacoco*
+
 after_script:
   - echo "End Automated Build"
