@@ -17,7 +17,7 @@ build:
   script:
     - ./gradlew assemble
   tags:
-    - docker-runner-estg
+    - miguel_test_runner
   artifacts:
     paths:
       - build/libs/*.jar
@@ -25,7 +25,7 @@ build:
 test_black_box:
   stage: test
   tags:
-    - docker-runner-estg
+    - miguel_test_runner
   script:
     - ./gradlew test
   artifacts:
@@ -34,7 +34,7 @@ test_black_box:
 test_white_box:
   stage: test
   tags:
-    - docker-runner-estg
+    - miguel_test_runner
   script:
     - ./gradlew jacocoTestReport
   artifacts:
