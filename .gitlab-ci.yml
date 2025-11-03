@@ -8,6 +8,9 @@ variables:
   GIT_SSL_NO_VERIFY: "true"
 
 before_script:
+  - git config --global user.name "$CI_JOB_USERNAME"
+  - git config --global user.email "8240332@estg.ipp.pt"
+  - git remote set-url origin https://$CI_JOB_USERNAME:$CI_JOB_TOKEN@gitlab.estg.ipp.pt/8240332/esii-grupoi-2025-26.git
   - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
   - export PATH=$JAVA_HOME/bin:$PATH
   - echo "Start Automated Build"
