@@ -37,6 +37,11 @@ application {
     mainClass = 'org.example.App'
 }
 
+jar {
+    archiveBaseName.set('esii-grupoi')
+    archiveVersion.set('1.0')
+}
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
