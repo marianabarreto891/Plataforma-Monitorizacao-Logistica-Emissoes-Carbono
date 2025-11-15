@@ -1,10 +1,12 @@
+package cargo;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for the ElementType enum.
  */
-class ElementTypeTest {
+public class ElementTypeTest {
 
     /**
      * Test case: Verify that enum values exist
