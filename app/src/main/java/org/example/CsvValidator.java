@@ -102,7 +102,7 @@ public class CsvValidator implements ICsvValidator {
      * @return true if the header columns match the expected Header enum values.
      */
     private  boolean validateHeader(String header) {
-        String[] columns = header.split(DELIMITER);
+        String[] columns = header.split(DELIMITER, -1);
         Header[] expectedHeaders = Header.values();
 
         if (columns.length != expectedHeaders.length) {

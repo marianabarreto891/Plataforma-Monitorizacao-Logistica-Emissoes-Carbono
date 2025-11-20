@@ -1,9 +1,15 @@
 package org.example;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CsvValidatorTest {
     private CsvValidator validator;
+
+    @BeforeEach
+    void setup() {
+        validator = new CsvValidator();
+    }
 
     @Test
     public void testValidNumberOfColumns() {
