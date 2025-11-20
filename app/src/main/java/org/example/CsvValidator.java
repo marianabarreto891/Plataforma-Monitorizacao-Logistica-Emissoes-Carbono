@@ -1,14 +1,26 @@
 package org.example;
 
+/**
+ * Validates CSV content against specific structural and data integrity requirements.
+ */
 public class CsvValidator implements ICsvValidator {
     private static final String DELIMITER = ";";
     private static final int MINIMUM_NUMBER_ROWS = 2;
     private static final int MODE_POSITION = 0;
     private static final int FUEL_TYPE_POSITION = 2;
     private static final int GEOGRAPHY_POSITION = 3;
+    private static final int PAYLOAD_POSITION = 4;
+    private static final int EMPTY_KM_POSITION = 5;
+    private static final int TOTAL_EMISSIONS_POSITION = 9;
+    private static final int YEAR_POSITION = 11;
 
 
-
+    /**
+     * Validates the entire CSV content to ensure it meets formatting and data constraints.
+     *
+     * @param content The raw CSV string to be validated.
+     * @return true if the content is valid, false otherwise.
+     */
     @Override
     public boolean validate(String content) {
         if (content == null || content.isEmpty()) {
@@ -28,6 +40,10 @@ public class CsvValidator implements ICsvValidator {
         for (int i = 1; i < lines.length; i++) {
             String row = lines[i].trim();
 
+            if (row.isEmpty()) {
+                continue;
+            }
+
             if (!validateRow(row)) {
                 return false;
             }
@@ -36,6 +52,12 @@ public class CsvValidator implements ICsvValidator {
         return true;
     }
 
+    /**
+     * Validates a single row of data against column count and specific field rules.
+     *
+     * @param row The single line string representing a CSV row.
+     * @return true if the row structure and all its fields are valid.
+     */
     private boolean validateRow (String row) {
         String[] columns = row.split(DELIMITER, -1);
 
@@ -54,9 +76,31 @@ public class CsvValidator implements ICsvValidator {
         if (!validateGeography(columns[GEOGRAPHY_POSITION])) {
             return false;
         }
+
+        if (!validatePayload(columns[PAYLOAD_POSITION])) {
+            return false;
+        }
+
+        if (!validateEmptyKmPresent(columns[EMPTY_KM_POSITION])) {
+            return false;
+        }
+
+        if (!validateTotalEmissions(columns[TOTAL_EMISSIONS_POSITION])) {
+            return false;
+        }
+
+        if (!validateYear(columns[YEAR_POSITION])) {
+            return false;
+        }
         return true;
     }
 
+    /**
+     * Verifies that the CSV header matches the expected column sequence.
+     *
+     * @param header The first line of the CSV content.
+     * @return true if the header columns match the expected Header enum values.
+     */
     private  boolean validateHeader(String header) {
         String[] columns = header.split(DELIMITER);
         Header[] expectedHeaders = Header.values();
@@ -73,6 +117,12 @@ public class CsvValidator implements ICsvValidator {
         return true;
     }
 
+    /**
+     * Checks if the provided mode string matches a valid Mode enum value.
+     *
+     * @param mode The transport mode string to verify.
+     * @return true if the mode is valid.
+     */
     private boolean validateMode(String mode) {
         Mode[] modes = Mode.values();
 
@@ -84,6 +134,12 @@ public class CsvValidator implements ICsvValidator {
         return false;
     }
 
+    /**
+     * Checks if the provided fuel type string matches a valid FuelType enum value.
+     *
+     * @param fuelType The fuel type string to verify.
+     * @return true if the fuel type is valid.
+     */
     private boolean validateFuelType(String fuelType) {
         FuelType[] fuelTypes = FuelType.values();
 
@@ -95,6 +151,12 @@ public class CsvValidator implements ICsvValidator {
         return false;
     }
 
+    /**
+     * Checks if the provided geography string matches a valid Geography enum value.
+     *
+     * @param geography The geography string to verify.
+     * @return true if the geography is valid.
+     */
     private boolean validateGeography(String geography) {
         Geography[] geographies = Geography.values();
 
@@ -104,5 +166,74 @@ public class CsvValidator implements ICsvValidator {
             }
         }
         return false;
+    }
+
+    /**
+     * Validates that the payload is a positive numeric value.
+     *
+     * @param payload The payload string to parse.
+     * @return true if the payload is a valid positive number.
+     */
+    private boolean validatePayload(String payload) {
+        try {
+            double payloadDouble = Double.parseDouble(payload);
+            return payloadDouble > 0;
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Validates that the empty kilometer value is a properly formatted percentage between 0 and 100.
+     *
+     * @param emptyKm The percentage string (must end with "%").
+     * @return true if the format is correct and the value is within range.
+     */
+    private boolean validateEmptyKmPresent(String emptyKm) {
+        if (emptyKm == null || !emptyKm.endsWith("%")) {
+            return false;
+        }
+
+        try {
+            String numberKms = emptyKm.replace("%", "").trim();
+            double emptyKmDouble = Double.parseDouble(numberKms);
+            return emptyKmDouble >= 0 && emptyKmDouble <= 100;
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Validates that the total emissions value is a non-negative number.
+     *
+     * @param totalEmissions The emissions string to parse.
+     * @return true if the emissions value is a valid non-negative number.
+     */
+    private boolean validateTotalEmissions(String totalEmissions) {
+        try {
+            double EmissionsDouble = Double.parseDouble(totalEmissions);
+            return EmissionsDouble >= 0;
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Validates that the year is a numeric integer within the allowed range (2000-2025).
+     *
+     * @param year The year string to parse.
+     * @return true if the year is parsed successfully and is within the valid range.
+     */
+    private boolean validateYear(String year) {
+        try {
+           int yearInt = Integer.parseInt(year);
+           return yearInt >= 2000 && yearInt <= 2025;
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

@@ -1,7 +1,9 @@
 package org.example;
 
+/**
+ * Represents the supported geographic regions for validation.
+ */
 public enum Geography {
-
     GLOBAL("global"),
     EUA("eua"),
     USA("usa");
@@ -13,11 +15,22 @@ public enum Geography {
         this.name = name;
     }
 
+    /**
+     * Retrieves the string identifier for the geography.
+     *
+     * @return the name of the geographic region.
+     */
     public String getName() {
         return name;
     }
 
-    public boolean matches (String geography) {
+    /**
+     * Checks if the provided string matches this geography's name.
+     *
+     * @param geography the string to compare.
+     * @return true if the provided string matches the geography name.
+     */
+    public boolean matches(String geography) {
         return name.equals(geography);
     }
 }

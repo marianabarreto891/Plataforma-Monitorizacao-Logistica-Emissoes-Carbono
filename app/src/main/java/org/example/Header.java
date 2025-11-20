@@ -1,7 +1,9 @@
 package org.example;
 
+/**
+ * Represents the expected CSV header columns for validation.
+ */
 public enum Header {
-
     MODE("Mode"),
     VEHICLE_CATEGORY("Vehicle_Category"),
     FUEL_TYPE("Fuel_Type"),
@@ -23,11 +25,22 @@ public enum Header {
         this.name = name;
     }
 
+    /**
+     * Retrieves the string identifier for the header column.
+     *
+     * @return the name of the header column.
+     */
     public String getName() {
         return name;
     }
 
-    public boolean matches (String header) {
+    /**
+     * Checks if the provided string matches this header's name.
+     *
+     * @param header the string to compare.
+     * @return true if the provided string matches the header name.
+     */
+    public boolean matches(String header) {
         return name.equals(header);
     }
 }
