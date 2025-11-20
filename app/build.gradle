@@ -45,13 +45,15 @@ pmd {
     consoleOutput = true
     toolVersion = "7.2.0"
     //rulesMinimumPriority = 5
-    ignoreFailures = false // o build falha se houverem violações pmd
+    ignoreFailures = false
     ruleSetFiles = files("src/main/resources/java/custom-pmd-ruleset.xml")
     ruleSets = []
+}
 
+tasks.withType(Pmd) {
     reports {
-        xml.enabled = false
-        html.enabled = true
+        xml.required.set(false)
+        html.required.set(true)
     }
 }
 
