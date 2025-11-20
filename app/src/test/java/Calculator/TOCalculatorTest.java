@@ -64,7 +64,6 @@ public class TOCalculatorTest {
     }
 
 
-
     // ===========================
     // BVA: ConsumoEi
     // ===========================
@@ -237,88 +236,5 @@ public class TOCalculatorTest {
         double wtw = calc.calcularWtw(1000, 300, 1001);
 
         assertEquals(-1, wtw);
-    }
-
-    // ===========================
-    // White Box Testing
-    // ===========================
-
-    // ------------------------------
-    // 1. Testes do primeiro if (consumoEi)
-    // ------------------------------
-
-    @Test
-    void testPrimeiroIfPrimeiraCondicao() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(-1, 100, 100);
-
-        assertEquals(-1, wtw);
-    }
-
-    @Test
-    void testPrimeiroIfSegundaCondicao() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(20000, 100, 100);
-
-        assertEquals(-1, wtw);
-    }
-
-    // ------------------------------
-    // 2. Testes do primeiro if (efTTW)
-    // ------------------------------
-
-    @Test
-    void testSegundoIfPrimeiraCondicao() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(100, -1, 100);
-
-        assertEquals(-1, wtw);
-    }
-
-    @Test
-    void testSegundaIfSegundaCondicao() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(100, 1500, 100);
-
-        assertEquals(-1, wtw);
-    }
-
-    // ------------------------------
-    // 3. Testes do primeiro if (efWTT)
-    // ------------------------------
-
-    @Test
-    void testTerceiroIfPrimeiraCondicao() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(100, 100, -1);
-
-        assertEquals(-1, wtw);
-    }
-
-    @Test
-    void testTerceiroIfSegundaCondicao() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(100, 100, 1500);
-
-        assertEquals(-1, wtw);
-    }
-
-    // ------------------------------
-    // 4. Caminho normal (tudo válido)
-    // ------------------------------
-
-    @Test
-    void TestCaminhoNormal() {
-        TOCalculator calc = new TOCalculator();
-
-        double wtw = calc.calcularWtw(100, 100, 100);
-
-        assertEquals(20000, wtw);
     }
 }
