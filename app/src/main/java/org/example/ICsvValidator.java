@@ -4,5 +4,5 @@ package org.example;
  */
 public interface ICsvValidator {
 
-    boolean Validate(String path);
+    boolean validate(String path);
 }
