@@ -1,13 +1,14 @@
-image: gradle:7.5.0-jdk11-alpine
-
 stages:
   - build
   - test
 
 variables:
   GIT_SSL_NO_VERIFY: "true"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
 
 before_script:
+  - pkill -9 java || true
+  - pkill -9 gradle || true
   - git config --global user.name "$CI_JOB_USERNAME"
   - git config --global user.email "8240332@estg.ipp.pt"
   - git remote set-url origin https://$CI_JOB_USERNAME:$CI_JOB_TOKEN@gitlab.estg.ipp.pt/8240332/esii-grupoi-2025-26.git
@@ -22,7 +23,7 @@ cache:
 build:
   stage: build
   script:
-    - ./gradlew assemble
+    - ./gradlew clean assemble
   tags:
     - miguel_test_runner
   artifacts:
