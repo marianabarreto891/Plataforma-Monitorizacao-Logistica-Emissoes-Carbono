@@ -6,13 +6,11 @@ public class TOCalculator implements TOCalculations {
     private double wtt;
     private double wtw;
 
-    @Override
-    public double calcularTTW(double consumoEi, double efTTW) {
+    private double calcularTTW(double consumoEi, double efTTW) {
         return consumoEi * efTTW;
     }
 
-    @Override
-    public double calcularWTT(double consumoEi, double efWTT) {
+    private double calcularWTT(double consumoEi, double efWTT) {
         return consumoEi * efWTT;
     }
 
