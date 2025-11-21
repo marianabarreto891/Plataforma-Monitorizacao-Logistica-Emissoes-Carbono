@@ -14,14 +14,12 @@ before_script:
   - git remote set-url origin https://$CI_JOB_USERNAME:$CI_JOB_TOKEN@gitlab.estg.ipp.pt/8240332/esii-grupoi-2025-26.git
   - export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
   - export PATH=$JAVA_HOME/bin:$PATH
-  - echo "Start Automated Build"
+  - export GRADLE_USER_HOME=`pwd`/.gradle
   - chmod +x ./gradlew
-
 cache:
   paths:
     - .gradle/wrapper
     - .gradle/caches
-
 build:
   stage: build
   script:
