@@ -1,4 +1,4 @@
-package org.example;
+package DataIngest;
 
 public class CsvLoaderTest {
 }

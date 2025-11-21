@@ -1,8 +1,8 @@
-package interfaces;
+package Calculator;
 
 public interface ICalculateActivityData {
 
-    double calculateActivityData(double loadFactor,
+     public double calculateActivityData(double loadFactor,
                                  double emptyReturn,
                                  double distance,
                                  double load);

@@ -1,4 +1,4 @@
-package org.example;
+package Calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 public class TestCalculateActivityData {
 
     private final CalculateActivityData calc = new CalculateActivityData();
-
 
     /*VALID VALUES */
 
@@ -97,12 +96,11 @@ public class TestCalculateActivityData {
         assertEquals(-1, result, 0.0001);
     }
 
-     @Test
+    @Test
     void testActivityData_LowerInvalidLoad() {
         double result = calc.calculateActivityData(0.8, 0.2, 100, -1);
 
         assertEquals(-1, result, 0.0001);
     }
-    
-}
 
+}

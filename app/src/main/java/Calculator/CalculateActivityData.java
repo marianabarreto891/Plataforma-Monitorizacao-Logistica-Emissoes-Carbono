@@ -1,6 +1,4 @@
-package org.example;
-
-import interfaces.ICalculateActivityData;
+package Calculator;
 
 public class CalculateActivityData implements ICalculateActivityData {
 
@@ -29,3 +27,4 @@ public class CalculateActivityData implements ICalculateActivityData {
         return load * loadFactor;
     }
 }
+

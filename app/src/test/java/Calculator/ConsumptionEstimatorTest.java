@@ -44,4 +44,3 @@ public class ConsumptionEstimatorTest {
         assertEquals(1.0, ce.calculateEi(10, 0.1), 0.01);
     }
 }
-

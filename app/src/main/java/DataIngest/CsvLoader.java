@@ -1,4 +1,4 @@
-package org.example;
+package DataIngest;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
