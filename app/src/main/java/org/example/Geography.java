@@ -31,6 +31,6 @@ public enum Geography {
      * @return true if the provided string matches the geography name.
      */
     public boolean matches(String geography) {
-        return name.equals(geography);
+        return name.equalsIgnoreCase(geography);
     }
 }

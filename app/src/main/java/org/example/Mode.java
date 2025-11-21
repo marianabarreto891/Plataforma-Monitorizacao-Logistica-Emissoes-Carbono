@@ -30,6 +30,6 @@ public enum Mode {
      * @return true if the provided string matches the mode name.
      */
     public boolean matches(String mode) {
-        return name.equals(mode);
+        return name.equalsIgnoreCase(mode);
     }
 }

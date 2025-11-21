@@ -41,6 +41,6 @@ public enum Header {
      * @return true if the provided string matches the header name.
      */
     public boolean matches(String header) {
-        return name.equals(header);
+        return name.equalsIgnoreCase(header);
     }
 }

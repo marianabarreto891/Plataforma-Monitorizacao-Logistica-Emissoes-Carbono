@@ -29,6 +29,6 @@ public enum FuelType {
      * @return true if the provided string matches the fuel type name.
      */
     public boolean matches(String fuelType) {
-        return name.equals(fuelType);
+        return name.equalsIgnoreCase(fuelType);
     }
 }

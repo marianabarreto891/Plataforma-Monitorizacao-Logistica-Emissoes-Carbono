@@ -176,7 +176,7 @@ public class CsvValidator implements ICsvValidator {
      */
     private boolean validatePayload(String payload) {
         try {
-            double payloadDouble = Double.parseDouble(payload);
+            double payloadDouble = Double.parseDouble(payload.replace(",", ".").trim());
             return payloadDouble > 0;
 
         } catch (NumberFormatException e) {
@@ -196,7 +196,7 @@ public class CsvValidator implements ICsvValidator {
         }
 
         try {
-            String numberKms = emptyKm.replace("%", "").trim();
+            String numberKms = emptyKm.replace("%", "").replace(",", ".").trim();
             double emptyKmDouble = Double.parseDouble(numberKms);
             return emptyKmDouble >= 0 && emptyKmDouble <= 100;
 
@@ -213,8 +213,8 @@ public class CsvValidator implements ICsvValidator {
      */
     private boolean validateTotalEmissions(String totalEmissions) {
         try {
-            double EmissionsDouble = Double.parseDouble(totalEmissions);
-            return EmissionsDouble >= 0;
+            double emissionsDouble = Double.parseDouble(totalEmissions.replace(",", ".").trim());
+            return emissionsDouble >= 0;
 
         } catch (NumberFormatException e) {
             return false;
