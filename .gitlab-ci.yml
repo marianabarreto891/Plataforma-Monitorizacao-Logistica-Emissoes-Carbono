@@ -6,8 +6,11 @@ variables:
   GIT_SSL_NO_VERIFY: "true"
   GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GIT_DEPTH: "0" 
 
 before_script:
+  - rm -f $CI_PROJECT_DIR/.git/shallow.lock || true
+  - rm -f $CI_PROJECT_DIR/.git/index.lock || true
   - pkill -9 java || true
   - pkill -9 gradle || true
   - git config --global user.name "$CI_JOB_USERNAME"
