@@ -15,7 +15,7 @@ public class CsvLoader implements ICsvLoader {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
+                String[] values = line.split(";");
                 data.add(values);
             }
         } catch (IOException e) {

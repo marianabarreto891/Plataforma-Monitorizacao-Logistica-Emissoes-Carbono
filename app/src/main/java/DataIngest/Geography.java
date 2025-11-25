@@ -1,11 +1,11 @@
-package org.example;
+package DataIngest;
 
 /**
  * Represents the supported geographic regions for validation.
  */
 public enum Geography {
     GLOBAL("global"),
-    EUA("eua"),
+    EUA("eu"),
     USA("usa");
 
 

@@ -1,4 +1,4 @@
-package org.example;
+package DataIngest;
 
 /**
  * Represents the expected CSV header columns for validation.

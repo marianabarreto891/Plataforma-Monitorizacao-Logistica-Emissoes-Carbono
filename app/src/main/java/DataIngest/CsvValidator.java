@@ -1,4 +1,4 @@
-package org.example;
+package DataIngest;
 
 /**
  * Validates CSV content against specific structural and data integrity requirements.

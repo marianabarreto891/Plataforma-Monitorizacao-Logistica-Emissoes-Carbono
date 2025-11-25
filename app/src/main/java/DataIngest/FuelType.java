@@ -1,4 +1,4 @@
-package org.example;
+package DataIngest;
 
 /**
  * Represents the supported fuel types used for validation.

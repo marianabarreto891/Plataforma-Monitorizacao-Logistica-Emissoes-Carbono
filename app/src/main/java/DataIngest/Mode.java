@@ -1,4 +1,4 @@
-package org.example;
+package DataIngest;
 
 /**
  * Represents the supported transport modes for validation.
@@ -6,7 +6,7 @@ package org.example;
 public enum Mode {
     ROAD("road"),
     AIR("air"),
-    SEE("see");
+    SEE("sea");
 
     private final String name;
 
