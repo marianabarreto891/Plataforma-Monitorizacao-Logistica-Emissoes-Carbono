@@ -7,12 +7,15 @@ public class CsvValidator implements ICsvValidator {
     private static final String DELIMITER = ";";
     private static final int MINIMUM_NUMBER_ROWS = 2;
     private static final int MODE_POSITION = 0;
+    private static  final int VEHICLE_CATEGORY_POSITION = 1;
     private static final int FUEL_TYPE_POSITION = 2;
     private static final int GEOGRAPHY_POSITION = 3;
     private static final int PAYLOAD_POSITION = 4;
     private static final int EMPTY_KM_POSITION = 5;
+    private static final int ACTIVITY_UNIT_POSITION = 6;
     private static final int TOTAL_EMISSIONS_POSITION = 9;
     private static final int YEAR_POSITION = 11;
+    private static final String EXPECTED_ACTIVITY_UNIT = "kgCO2e/t¬∑km";
 
 
     /**
@@ -69,6 +72,10 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
 
+        if (!validateVehicleCategory(columns[VEHICLE_CATEGORY_POSITION])) {
+            return false;
+        }
+
         if (!validateFuelType(columns[FUEL_TYPE_POSITION])) {
             return false;
         }
@@ -85,6 +92,10 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
 
+        if (!validateActivityUnit(columns[ACTIVITY_UNIT_POSITION])) {
+            return false;
+        }
+
         if (!validateTotalEmissions(columns[TOTAL_EMISSIONS_POSITION])) {
             return false;
         }
@@ -92,6 +103,7 @@ public class CsvValidator implements ICsvValidator {
         if (!validateYear(columns[YEAR_POSITION])) {
             return false;
         }
+
         return true;
     }
 
@@ -235,5 +247,28 @@ public class CsvValidator implements ICsvValidator {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    /**
+     * Validates that the vehicle category is provided and is not empty.
+     *
+     * @param vehicleCategory The vehicle category string to validate.
+     * @return true if the category is not null and contains non-whitespace characters.
+     */
+    private boolean validateVehicleCategory(String vehicleCategory) {
+        return vehicleCategory != null && !vehicleCategory.trim().isEmpty();
+    }
+
+    /**
+     * Validates that the activity unit matches the required specific format exactly.
+     *
+     * @param activityUnit The activity unit string to verify.
+     * @return true if the unit is not null and matches the expected standard unit.
+     */
+    private boolean validateActivityUnit(String activityUnit) {
+        if (activityUnit == null) {
+            return false;
+        }
+        return activityUnit.trim().equals(EXPECTED_ACTIVITY_UNIT);
     }
 }

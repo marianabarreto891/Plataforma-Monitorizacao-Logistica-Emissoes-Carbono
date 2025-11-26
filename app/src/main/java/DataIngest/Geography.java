@@ -5,7 +5,7 @@ package DataIngest;
  */
 public enum Geography {
     GLOBAL("global"),
-    EUA("eu"),
+    EU("eu"),
     USA("usa");
 
 
@@ -32,5 +32,14 @@ public enum Geography {
      */
     public boolean matches(String geography) {
         return name.equalsIgnoreCase(geography);
+    }
+
+    public static Geography fromString(String geography) {
+        for (Geography currentGeography : values()) {
+            if (currentGeography.matches(geography)) {
+                return currentGeography;
+            }
+        }
+        throw new IllegalArgumentException("Invalid geography: " + geography);
     }
 }

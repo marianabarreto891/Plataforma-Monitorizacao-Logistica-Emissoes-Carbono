@@ -6,7 +6,7 @@ package DataIngest;
 public enum Mode {
     ROAD("road"),
     AIR("air"),
-    SEE("sea");
+    SEA("sea");
 
     private final String name;
 
@@ -31,5 +31,14 @@ public enum Mode {
      */
     public boolean matches(String mode) {
         return name.equalsIgnoreCase(mode);
+    }
+
+    public static Mode fromString(String mode) {
+        for (Mode currentMode : values()) {
+            if (currentMode.matches(mode)) {
+                return currentMode;
+            }
+        }
+        throw new IllegalArgumentException("Invalid mode: " + mode);
     }
 }
