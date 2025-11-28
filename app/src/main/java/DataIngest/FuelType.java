@@ -31,4 +31,13 @@ public enum FuelType {
     public boolean matches(String fuelType) {
         return name.equalsIgnoreCase(fuelType);
     }
+
+    public static FuelType fromString(String fuelType) {
+        for (FuelType currentFuelType : values()) {
+            if (currentFuelType.matches(fuelType)) {
+                return currentFuelType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid fuelType: " + fuelType);
+    }
 }
