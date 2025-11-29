@@ -1,42 +1,33 @@
 package TransportChain;
 
 public class HubOperation extends TransportChainElement {
-    private double consumoEnergia;
-    private double fatorEmissao;
+    private double energyConsumption;
+    private double emissionFactor;
 
-    public HubOperation(String elementId, String chainId, String geography, double fatorEmissao, double consumoEnergia) {
-        super(elementId, chainId, geography);
-        this.consumoEnergia = consumoEnergia;
-        this.fatorEmissao = fatorEmissao;
+    public HubOperation(String elementId, String chainId, String geography, int year, double emissionFactor, double energyConsumption) {
+        super(elementId, chainId, geography, year);
+        this.energyConsumption = energyConsumption;
+        this.emissionFactor = emissionFactor;
     }
 
-    public double getConsumoEnergia() {
-        return consumoEnergia;
+    public double getEnergyConsumption() {
+        return energyConsumption;
     }
 
-    public double getFatorEmissao() {
-        return fatorEmissao;
+    public double getEmissionFactor() {
+        return emissionFactor;
     }
 
-    public void setConsumoEnergia(double consumoEnergia) {
-        this.consumoEnergia = consumoEnergia;
+    public void setEnergyConsumption(double energyConsumption) {
+        this.energyConsumption = energyConsumption;
     }
 
-    public void setFatorEmissao(double fatorEmissao) {
-        this.fatorEmissao = fatorEmissao;
+    public void setEmissionFactor(double emissionFactor) {
+        this.emissionFactor = emissionFactor;
     }
 
     @Override
     public String getElementId() {
         return super.getElementId();
-    }
-
-    @Override
-    public String listarAtributos() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ElementId: ").append(getElementId())
-                .append(", ConsumoEnergia: ").append(getConsumoEnergia())
-                .append(", FatorEmissao: ").append(getFatorEmissao());
-        return sb.toString();
     }
 }

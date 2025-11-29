@@ -18,7 +18,7 @@ public class TOCalculatorTest {
     void testInputsValid() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(5000, 500, 500);
+        double wtw = calc.calculateWTW(5000, 500, 500);
 
         assertEquals(5000000, wtw);
     }
@@ -27,7 +27,7 @@ public class TOCalculatorTest {
     void testNegativeInputs() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(-100, 500, 500);
+        double wtw = calc.calculateWTW(-100, 500, 500);
 
         assertEquals(-1, wtw);
     }
@@ -36,7 +36,7 @@ public class TOCalculatorTest {
     void testZeroInputs() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(0, 0, 0);
+        double wtw = calc.calculateWTW(0, 0, 0);
 
         assertEquals(0, wtw);
     }
@@ -49,7 +49,7 @@ public class TOCalculatorTest {
     void testAllMinValues() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(0, 0, 0);
+        double wtw = calc.calculateWTW(0, 0, 0);
 
         assertEquals(0, wtw);
     }
@@ -58,7 +58,7 @@ public class TOCalculatorTest {
     void testAllMaxValues() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(10000, 1000, 1000);
+        double wtw = calc.calculateWTW(10000, 1000, 1000);
 
         assertEquals(20000000, wtw);
     }
@@ -72,7 +72,7 @@ public class TOCalculatorTest {
     void testMinConsumo() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(0, 300, 300);
+        double wtw = calc.calculateWTW(0, 300, 300);
 
         assertEquals(0, wtw);
     }
@@ -81,7 +81,7 @@ public class TOCalculatorTest {
     void testMinConsumoMinusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(-1, 300, 300);
+        double wtw = calc.calculateWTW(-1, 300, 300);
 
         assertEquals(-1, wtw);
     }
@@ -90,7 +90,7 @@ public class TOCalculatorTest {
     void testMinConsumoPlusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1, 300, 300);
+        double wtw = calc.calculateWTW(1, 300, 300);
 
         assertEquals(600, wtw);
     }
@@ -99,7 +99,7 @@ public class TOCalculatorTest {
     void testMaxConsumo() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(10000, 300, 300);
+        double wtw = calc.calculateWTW(10000, 300, 300);
 
         assertEquals(6000000, wtw);
     }
@@ -108,7 +108,7 @@ public class TOCalculatorTest {
     void testMaxConsumoMinusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(9999, 300, 300);
+        double wtw = calc.calculateWTW(9999, 300, 300);
 
         assertEquals(5999400, wtw);
     }
@@ -117,7 +117,7 @@ public class TOCalculatorTest {
     void testMaxConsumoPlusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(10001, 300, 300);
+        double wtw = calc.calculateWTW(100000001, 300, 300);
 
         assertEquals(-1, wtw);
     }
@@ -130,7 +130,7 @@ public class TOCalculatorTest {
     void testMin_EFTTW() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 0, 300);
+        double wtw = calc.calculateWTW(1000, 0, 300);
 
         assertEquals(300000, wtw);
     }
@@ -139,7 +139,7 @@ public class TOCalculatorTest {
     void testMin_EFTTW_MinusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, -1, 300);
+        double wtw = calc.calculateWTW(1000, -1, 300);
 
         assertEquals(-1, wtw);
     }
@@ -148,7 +148,7 @@ public class TOCalculatorTest {
     void testMin_EFTTW_PlusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 1, 300);
+        double wtw = calc.calculateWTW(1000, 1, 300);
 
         assertEquals(301000, wtw);
     }
@@ -157,7 +157,7 @@ public class TOCalculatorTest {
     void testMax_EFTTW() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 1000, 300);
+        double wtw = calc.calculateWTW(1000, 1000, 300);
 
         assertEquals(1300000, wtw);
     }
@@ -166,7 +166,7 @@ public class TOCalculatorTest {
     void testMax_EFTTW_MinusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 999, 300);
+        double wtw = calc.calculateWTW(1000, 999, 300);
 
         assertEquals(1299000, wtw);
     }
@@ -175,7 +175,7 @@ public class TOCalculatorTest {
     void testMax_EFTTW_PlusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 1001, 300);
+        double wtw = calc.calculateWTW(1000, 1001, 300);
 
         assertEquals(-1, wtw);
     }
@@ -188,7 +188,7 @@ public class TOCalculatorTest {
     void testMin_EFWTT() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 300, 0);
+        double wtw = calc.calculateWTW(1000, 300, 0);
 
         assertEquals(300000, wtw);
     }
@@ -197,7 +197,7 @@ public class TOCalculatorTest {
     void testMin_EFWTT_MinusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 300, -1);
+        double wtw = calc.calculateWTW(1000, 300, -1);
 
         assertEquals(-1, wtw);
     }
@@ -206,7 +206,7 @@ public class TOCalculatorTest {
     void testMin_EFWTT_PlusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 300, 1);
+        double wtw = calc.calculateWTW(1000, 300, 1);
 
         assertEquals(301000, wtw);
     }
@@ -215,7 +215,7 @@ public class TOCalculatorTest {
     void testMax_EFWTT() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 300, 1000);
+        double wtw = calc.calculateWTW(1000, 300, 1000);
 
         assertEquals(1300000, wtw);
     }
@@ -224,7 +224,7 @@ public class TOCalculatorTest {
     void testMax_EFWTT_MinusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 300, 999);
+        double wtw = calc.calculateWTW(1000, 300, 999);
 
         assertEquals(1299000, wtw);
     }
@@ -233,7 +233,7 @@ public class TOCalculatorTest {
     void testMax_EFWTT_PlusOne() {
         TOCalculator calc = new TOCalculator();
 
-        double wtw = calc.calcularWtw(1000, 300, 1001);
+        double wtw = calc.calculateWTW(1000, 300, 1001);
 
         assertEquals(-1, wtw);
     }
