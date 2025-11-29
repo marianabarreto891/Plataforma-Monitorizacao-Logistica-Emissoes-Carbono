@@ -1,97 +1,64 @@
 package TransportChain;
 
+import DataIngest.Mode;
+
 public class TransportOperation extends TransportChainElement {
-    private double distanciaKm;
-    private double cargaTotalCapacidade;
-    private double fatorCarga;
+    private Mode mode;
+    private String vehicleCategory;
+    private double distanceKm;
+    private double totalLoadCapacity;
+    private double loadFactor;
     private double emptyReturn;
-    private double consumoMedioE;
-    private double fatorEmissaoTTW;
-    private double fatorEmissaoWTT;
+    private double averageEnergyConsumption;
+    private double emissionFactorTTW;
+    private double emissionFactorWTT;
+    private double emissionsPerTKm; // único atributo de emissões
 
+    public TransportOperation(String elementId, String chainId, String geography, int year,
+                              Mode mode, String vehicleCategory,
+                              double distanceKm, double totalLoadCapacity, double loadFactor,
+                              double emptyReturn, double averageEnergyConsumption,
+                              double efTTW, double efWTT, double emissionsPerTKm) {
 
-    public TransportOperation(String elementId, String chainId, String geography, double distanciaKm, double cargaTotalCapacidade, double fatorCarga, double emptyReturn, double consumoMedioE, double efTTW, double efWTT) {
+        super(elementId, chainId, geography, year);
 
-        super(elementId, chainId, geography);
-
-        this.distanciaKm = distanciaKm;
-        this.cargaTotalCapacidade = cargaTotalCapacidade;
-        this.fatorCarga = fatorCarga;
+        this.mode = mode;
+        this.vehicleCategory = vehicleCategory;
+        this.distanceKm = distanceKm;
+        this.totalLoadCapacity = totalLoadCapacity;
+        this.loadFactor = loadFactor;
         this.emptyReturn = emptyReturn;
-        this.consumoMedioE = consumoMedioE;
-        this.fatorEmissaoTTW = efTTW;
-        this.fatorEmissaoWTT = efWTT;
-
+        this.averageEnergyConsumption = averageEnergyConsumption;
+        this.emissionFactorTTW = efTTW;
+        this.emissionFactorWTT = efWTT;
+        this.emissionsPerTKm = emissionsPerTKm;
     }
 
-    public double getDistanciaKm() {
-        return distanciaKm;
-    }
+    public void setMode(Mode mode) { this.mode = mode; }
 
-    public void setDistanciaKm(double distanciaKm) {
-        this.distanciaKm = distanciaKm;
-    }
+    public void setVehicleCategory(String vehicleCategory) { this.vehicleCategory = vehicleCategory; }
 
-    public double getCargaTotalCapacidade() {
-        return cargaTotalCapacidade;
-    }
+    public double getDistanceKm() { return distanceKm; }
+    public void setDistanceKm(double distanceKm) { this.distanceKm = distanceKm; }
 
-    public void setCargaTotalCapacidade(double cargaTotalCapacidade) {
-        this.cargaTotalCapacidade = cargaTotalCapacidade;
-    }
+    public double getTotalLoadCapacity() { return totalLoadCapacity; }
+    public void setTotalLoadCapacity(double totalLoadCapacity) { this.totalLoadCapacity = totalLoadCapacity; }
 
-    public double getFatorCarga() {
-        return fatorCarga;
-    }
+    public double getLoadFactor() { return loadFactor; }
+    public void setLoadFactor(double loadFactor) { this.loadFactor = loadFactor; }
 
-    public void setFatorCarga(double fatorCarga) {
-        this.fatorCarga = fatorCarga;
-    }
+    public double getEmptyReturn() { return emptyReturn; }
+    public void setEmptyReturn(double emptyReturn) { this.emptyReturn = emptyReturn; }
 
-    public double getEmptyReturn() {
-        return emptyReturn;
-    }
+    public double getAverageEnergyConsumption() { return averageEnergyConsumption; }
+    public void setAverageEnergyConsumption(double averageEnergyConsumption) { this.averageEnergyConsumption = averageEnergyConsumption; }
 
-    public void setEmptyReturn(double emptyReturn) {
-        this.emptyReturn = emptyReturn;
-    }
+    public double getEmissionFactorTTW() { return emissionFactorTTW; }
+    public void setEmissionFactorTTW(double emissionFactorTTW) { this.emissionFactorTTW = emissionFactorTTW; }
 
-    public double getConsumoMedioE() {
-        return consumoMedioE;
-    }
+    public double getEmissionFactorWTT() { return emissionFactorWTT; }
+    public void setEmissionFactorWTT(double emissionFactorWTT) { this.emissionFactorWTT = emissionFactorWTT; }
 
-    public void setConsumoMedioE(double consumoMedioE) {
-        this.consumoMedioE = consumoMedioE;
-    }
-
-    public double getFatorEmissaoTTW() {
-        return fatorEmissaoTTW;
-    }
-
-    public void setFatorEmissaoTTW(double fatorEmissaoTTW) {
-        this.fatorEmissaoTTW = fatorEmissaoTTW;
-    }
-
-    public double getFatorEmissaoWTT() {
-        return fatorEmissaoWTT;
-    }
-
-    public void setFatorEmissaoWTT(double fatorEmissaoWTT) {
-        this.fatorEmissaoWTT = fatorEmissaoWTT;
-    }
-
-    @Override
-    public String listarAtributos() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ElementId: ").append(getElementId())
-                .append(", DistanciaKm: ").append(getDistanciaKm())
-                .append(", CargaTotal: ").append(getCargaTotalCapacidade())
-                .append(", FatorCarga: ").append(getFatorCarga())
-                .append(", EmptyReturn: ").append(getEmptyReturn())
-                .append(", ConsumoMedioE: ").append(getConsumoMedioE())
-                .append(", FatorEmissaoTTW: ").append(getFatorEmissaoTTW())
-                .append(", FatorEmissaoWTT: ").append(getFatorEmissaoWTT())
-                .append(", Emissao: ").append(getEmissao());
-        return sb.toString();
-    }
+    public double getEmissionsPerTKm() { return emissionsPerTKm; }
+    public void setEmissionsPerTKm(double emissionsPerTKm) { this.emissionsPerTKm = emissionsPerTKm; }
 }

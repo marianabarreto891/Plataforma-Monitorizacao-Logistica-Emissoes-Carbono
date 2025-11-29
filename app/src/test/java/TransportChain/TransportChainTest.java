@@ -2,6 +2,7 @@ package TransportChain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import DataIngest.Mode;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,9 @@ class TransportChainTest {
     @Test
     void testAddTransportOperation() {
         TransportOperation op = new TransportOperation(
-                "TO001", "CHAIN001", "PT", 100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
 
         chain.addElement(op);
 
@@ -30,17 +33,14 @@ class TransportChainTest {
     @Test
     void testAddNullElement() {
         int initialSize = chain.getElements().size();
-
         chain.addElement(null);
-
-        assertEquals(initialSize, chain.getElements().size(), "A lista não deve alterar quando adicionamos null");
-        assertTrue(chain.getElements().isEmpty(), "A lista deve continuar vazia");
+        assertEquals(initialSize, chain.getElements().size(), "List should not change when adding null");
+        assertTrue(chain.getElements().isEmpty(), "List should remain empty");
     }
 
     @Test
     void testAddHubOperation() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 100.0, 0.5);
-
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 100.0, 0.5);
         chain.addElement(ho);
 
         assertEquals(1, chain.getElements().size());
@@ -50,172 +50,209 @@ class TransportChainTest {
     @Test
     void testRemoveTransportOperation() {
         TransportOperation to = new TransportOperation(
-                "TO001", "CHAIN001", "PT", 100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
         chain.addElement(to);
 
         boolean removed = chain.removeElement(to);
-
-        assertTrue(removed, "O método removeElement deve retornar true");
-        assertFalse(chain.getElements().contains(to), "A lista não deve conter o TransportOperation removido");
-        assertEquals(0, chain.getElements().size(), "A lista deve ficar vazia após remoção");
+        assertTrue(removed);
+        assertFalse(chain.getElements().contains(to));
+        assertEquals(0, chain.getElements().size());
     }
 
     @Test
     void testRemoveNonExistentTransportOperation() {
-        TransportOperation toInexistente = new TransportOperation(
-                "TO999", "CHAIN001", "PT", 200.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
+        TransportOperation to = new TransportOperation(
+                "TO999", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                200.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
 
-        boolean removed = chain.removeElement(toInexistente);
-
-        assertFalse(removed, "O método removeElement deve retornar false para elementos inexistentes");
-        assertTrue(chain.getElements().isEmpty(), "A lista deve permanecer inalterada");
+        boolean removed = chain.removeElement(to);
+        assertFalse(removed);
+        assertTrue(chain.getElements().isEmpty());
     }
 
     @Test
     void testRemoveExistingHubOperation() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 100.0, 0.5);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 100.0, 0.5);
         chain.addElement(ho);
 
         boolean removed = chain.removeElement(ho);
-
-        assertTrue(removed, "O método removeElement deve retornar true para HubOperation existente");
-        assertFalse(chain.getElements().contains(ho), "A lista não deve conter o HubOperation removido");
-        assertEquals(0, chain.getElements().size(), "A lista deve ficar vazia após remoção");
+        assertTrue(removed);
+        assertFalse(chain.getElements().contains(ho));
+        assertEquals(0, chain.getElements().size());
     }
 
     @Test
     void testRemoveNonExistentHubOperation() {
-        HubOperation hoInexistente = new HubOperation("HO999", "CHAIN001", "PT", 200.0, 0.5);
+        HubOperation ho = new HubOperation("HO999", "CHAIN001", "PT", 2025, 200.0, 0.5);
 
-        boolean removed = chain.removeElement(hoInexistente);
-
-        assertFalse(removed, "O método removeElement deve retornar false para HubOperation inexistente");
-        assertTrue(chain.getElements().isEmpty(), "A lista deve permanecer inalterada");
+        boolean removed = chain.removeElement(ho);
+        assertFalse(removed);
+        assertTrue(chain.getElements().isEmpty());
     }
 
     @Test
-    void testEditarHubOperation_Sucesso() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 0.5, 100.0);
+    void testEditHubOperation_Success() {
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 0.5, 100.0);
         chain.addElement(ho);
 
-        boolean resultado = chain.editarHubOperation("HO001", 20.0, 10.0);
-
-        assertTrue(resultado, "Deve retornar true ao editar um HubOperation existente");
-        assertEquals(10.0, ho.getConsumoEnergia(), 0.001, "O consumo de energia deve ser atualizado");
-        assertEquals(20.0, ho.getFatorEmissao(), 0.001, "O fator de emissão deve ser atualizado");
+        boolean result = chain.editHubOperation("HO001", 20.0, 10.0);
+        assertTrue(result);
+        assertEquals(10.0, ho.getEnergyConsumption(), 0.001);
+        assertEquals(20.0, ho.getEmissionFactor(), 0.001);
     }
 
     @Test
-    void testEditarHubOperation_Falha_IDInexistente() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 0.5, 100.0);
+    void testEditHubOperation_Failure_NonexistentID() {
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 0.5, 100.0);
         chain.addElement(ho);
 
-        boolean resultado = chain.editarHubOperation("HO999", 10.0, 20.0);
-
-        assertFalse(resultado, "Deve retornar false ao tentar editar um HubOperation inexistente");
-        assertEquals(100.0, ho.getConsumoEnergia(), 0.001, "O consumo de energia não deve mudar");
-        assertEquals(0.5, ho.getFatorEmissao(), 0.001, "O fator de emissão não deve mudar");
+        boolean result = chain.editHubOperation("HO999", 10.0, 20.0);
+        assertFalse(result);
+        assertEquals(100.0, ho.getEnergyConsumption(), 0.001);
+        assertEquals(0.5, ho.getEmissionFactor(), 0.001);
     }
 
     @Test
-    void testEditarTransportOperation_Falha_ValorNegativo() {
-        TransportOperation to = new TransportOperation("TO001", "CHAIN001", "PT", 100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
-
+    void testEditTransportOperation_Failure_NegativeValue() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
         chain.addElement(to);
 
-        boolean resultado = chain.editarTransportOperation("TO001", -10, 50, 0.8, 0.1, 5.0, 0.2, 0.1);
-
-        assertFalse(resultado, "Deve retornar false ao tentar editar com valor negativo");
+        boolean result = chain.editTransportOperation("TO001", Mode.ROAD, "Truck", -100.0, 50.0, 0.4, 0.2, 4.5, 0.5, 0.5, 0.0);
+        assertFalse(result);
     }
 
     @Test
-    void testEditarTransportOperation_Sucesso_ValoresPositivos() {
-        TransportOperation to = new TransportOperation("TO001", "CHAIN001", "PT", 100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
+    void testEditTransportOperation_Success_PositiveValues() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
         chain.addElement(to);
 
-        boolean resultado = chain.editarTransportOperation("TO001", 120.0, 60.0, 1.0, 0.2, 6.0, 0.3, 0.2);
-
-        assertTrue(resultado, "Deve retornar true ao editar com valores válidos");
+        boolean result = chain.editTransportOperation("TO001", Mode.ROAD, "Truck", 120.0, 40.0, 0.6, 0.3, 8.0, 0.3, 0.1, 0.0);
+        assertTrue(result);
     }
 
     @Test
-    void testEditarTransportOperation_Falha_IDInexistente() {
-        TransportOperation to = new TransportOperation("TO001", "CHAIN001", "PT", 100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
+    void testEditTransportOperation_Failure_NonexistentID() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
         chain.addElement(to);
 
-        boolean resultado = chain.editarTransportOperation("TO999", 200.0, 100.0, 0.5, 0.1, 10.0, 0.2, 0.1);
-
-        assertFalse(resultado, "Deve retornar false ao tentar editar um TransportOperation inexistente");
+        boolean result = chain.editTransportOperation("TO999", Mode.ROAD, "Truck", 100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0);
+        assertFalse(result);
     }
 
     @Test
-    void testEditarHubOperation_Sucesso_ValoresZero() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 10.0, 20.0);
+    void testEditTransportOperation_ZeroValues() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
+        chain.addElement(to);
+
+        boolean result = chain.editTransportOperation("TO001", Mode.ROAD, "Truck", 0, 0, 0, 0, 0, 0, 0, 0);
+        assertTrue(result);
+    }
+
+    @Test
+    void testEditHubOperation_ZeroValues() {
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
         chain.addElement(ho);
 
-        boolean resultado = chain.editarHubOperation("HO001", 0.0, 0.0);
-
-        assertTrue(resultado, "Deve retornar true ao editar um HubOperation existente");
+        boolean result = chain.editHubOperation("HO001", 0.0, 0.0);
+        assertTrue(result);
+        assertEquals(0.0, ho.getEnergyConsumption(), 0.001);
+        assertEquals(0.0, ho.getEmissionFactor(), 0.001);
     }
 
     @Test
-    void testEditarHubOperation_Sucesso_ValoresNormais() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 10.0, 20.0);
+    void testEditHubOperation_NormalValues() {
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
         chain.addElement(ho);
 
-        boolean resultado = chain.editarHubOperation("HO001", 0.5, 100.0);
-
-        assertTrue(resultado, "Deve retornar true ao editar um HubOperation existente");
-
-        assertEquals(100.0, ho.getConsumoEnergia(), 0.001, "O consumo de energia deve ser atualizado");
-        assertEquals(0.5, ho.getFatorEmissao(), 0.001, "O fator de emissão deve ser atualizado");
+        boolean result = chain.editHubOperation("HO001", 0.5, 100.0);
+        assertTrue(result);
+        assertEquals(100.0, ho.getEnergyConsumption(), 0.001);
+        assertEquals(0.5, ho.getEmissionFactor(), 0.001);
     }
 
     @Test
-    void testEditarHubOperation_Sucesso_ValoresMaximos() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 10.0, 20.0);
+    void testEditHubOperation_MaxValues() {
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
         chain.addElement(ho);
 
-        boolean resultado = chain.editarHubOperation("HO001", 1000, 1000000);
-
-        assertTrue(resultado, "Deve retornar true ao editar um HubOperation existente com valores altos");
-
-        assertEquals(1000000, ho.getConsumoEnergia(), 0.001, "O consumo de energia deve ser atualizado para valor alto");
-        assertEquals(1000, ho.getFatorEmissao(), 0.001, "O fator de emissão deve ser atualizado para valor alto");
+        boolean result = chain.editHubOperation("HO001", 1000.0, 1_000_000.0);
+        assertTrue(result);
+        assertEquals(1_000_000.0, ho.getEnergyConsumption(), 0.001);
+        assertEquals(1000.0, ho.getEmissionFactor(), 0.001);
     }
 
     @Test
-    void testEditarTransportOperation_ValoresZerados() {
-        TransportOperation to = new TransportOperation("TO001", "CHAIN001", "PT",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1);
+    void testEditTransportOperation_TypicalValues() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0
+        );
         chain.addElement(to);
 
-        boolean resultado = chain.editarTransportOperation("TO001", 0, 0, 0, 0, 0, 0, 0);
-
-        assertTrue(resultado, "Deve retornar true ao editar um TO existente com todos os valores = 0");
+        boolean result = chain.editTransportOperation("TO001", Mode.ROAD, "Truck", 400, 10, 0.5, 0.5, 0.5, 1.5, 1.5, 0.5);
+        assertTrue(result);
     }
 
     @Test
-    void testEditarTransportOperation_ValoresTipicos() {
-        TransportOperation to = new TransportOperation("TO001", "CHAIN001", "PT",
-                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0);
+    void testEditTransportOperation_UpperLimitValues() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0
+        );
         chain.addElement(to);
 
-        boolean resultado = chain.editarTransportOperation("TO001", 100, 50, 0.5, 50, 100, 0.5, 0.5);
+        boolean result = chain.editTransportOperation("TO001", Mode.ROAD, "CHAIN001", 1000.0, 80.0, 0.99, 0.99, 1000.0, 1000.0, 1000.0, 1);
+        assertTrue(result);
+    }
 
-        assertTrue(resultado, "Deve retornar true ao editar um TO existente com valores típicos");
+    // White BOX Testing for the method CalculateTotalGEE
+
+    @Test
+    void testCalculateTotalGEE_withEmptyOperations() {
+        double total = chain.calculateTotalGEE();
+        assertEquals(0.0, total);
+    }
+
+
+    @Test
+    void testCalculateTotalGEE_withValidOperations() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0);
+        chain.addElement(to);
+
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
+        chain.addElement(ho);
+
+        double total = chain.calculateTotalGEE();
+
+        assertEquals(200.0, total);
     }
 
     @Test
-    void testEditarTransportOperation_ValoresLimiteSuperior() {
-        TransportOperation to = new TransportOperation("TO001", "CHAIN001", "PT",
-                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0);
+    void testCalculateTotalGEE_withInvalidOperations() {
+        TransportOperation to = new TransportOperation(
+                "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
+                -100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+        );
         chain.addElement(to);
 
-        boolean resultado = chain.editarTransportOperation("TO001", 10_000, 1000, 1, 500, 10_000, 1000, 1000);
-
-        assertTrue(resultado, "Deve retornar true ao editar um TO existente com valores no limite superior");
+        double total = chain.calculateTotalGEE();
+        assertEquals(0.0, total, 0.01);
     }
 }
-
-

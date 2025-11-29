@@ -15,55 +15,56 @@ public class GEECalculator {
         this.consumptionEstimator = new ConsumptionEstimator();
     }
 
-    public double calcularGEE(TransportChain chain) {
+    public double calculateGEE(TransportChain chain) {
         double total = 0.0;
 
         for (TransportChainElement tce : chain.getElements()) {
 
             if (tce instanceof TransportOperation to) {
                 double activityData = activityCalculator.calculateActivityData(
-                        to.getFatorCarga(),
+                        to.getLoadFactor(),
                         to.getEmptyReturn(),
-                        to.getDistanciaKm(),
-                        to.getCargaTotalCapacidade()
+                        to.getDistanceKm(),
+                        to.getTotalLoadCapacity()
                 );
 
                 if (activityData <= 0) {
-                    System.err.println("Erro no cálculo de activityData para TO " + to.getElementId());
-                    to.setEmissao(0);
+                    System.err.println("Error calculating activityData for TO " + to.getElementId());
+                    to.setEmission(0);
                     continue;
                 }
 
-                double consumoEi;
+                double consumptionEi;
                 try {
-                    consumoEi = consumptionEstimator.calculateEi(activityData, to.getConsumoMedioE());
+                    consumptionEi = consumptionEstimator.calculateEi(activityData, to.getAverageEnergyConsumption());
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Erro no cálculo de consumoEi para TO " + to.getElementId() + ": " + e.getMessage());
-                    to.setEmissao(0);
+                    System.err.println("Error calculating consumptionEi for TO " + to.getElementId() + ": " + e.getMessage());
+                    to.setEmission(0);
                     continue;
                 }
 
-                double emissao = toCalculator.calcularWtw(consumoEi, to.getFatorEmissaoTTW(), to.getFatorEmissaoWTT());
-                if (emissao == -1) {
-                    System.err.println("Erro no cálculo WTW para TO " + to.getElementId());
-                    emissao = 0;
+                double emission = toCalculator.calculateWTW(consumptionEi, to.getEmissionFactorTTW(), to.getEmissionFactorWTT());
+                if (emission == -1) {
+                    System.err.println("Error calculating WTW for TO " + to.getElementId());
+                    emission = 0;
                 }
 
-                to.setEmissao(emissao);
-                total += to.getEmissao();
+                to.setEmission(emission);
+                total += to.getEmission();
 
             } else if (tce instanceof HubOperation hub) {
 
-                double emissao = hoCalculator.calculateEmissonsHO(hub.getFatorEmissao(), hub.getConsumoEnergia());
-                if (emissao == -1) {
-                    System.err.println("Erro no cálculo HO para Hub " + hub.getElementId());
-                    emissao = 0;
+                double emission = hoCalculator.calculateEmissonsHO(hub.getEmissionFactor(), hub.getEnergyConsumption());
+                if (emission == -1) {
+                    System.err.println("Error calculating HO for Hub " + hub.getElementId());
+                    emission = 0;
                 }
 
-                hub.setEmissao(emissao);
-                total += hub.getEmissao();
+                hub.setEmission(emission);
+                total += hub.getEmission();
             }
         }
+
         return total;
     }
 }
