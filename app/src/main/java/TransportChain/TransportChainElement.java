@@ -4,12 +4,14 @@ public abstract class TransportChainElement {
     private String elementId;
     private String chainId;
     private String geography;
-    private double emissao;
+    private int year;
+    private double emission;
 
-    public TransportChainElement(String elementId, String chainId, String geography) {
+    public TransportChainElement(String elementId, String chainId, String geography, int year) {
         this.elementId = elementId;
         this.chainId = chainId;
         this.geography = geography;
+        this.year = year;
     }
 
     public String getElementId() {
@@ -28,11 +30,18 @@ public abstract class TransportChainElement {
         this.geography = geography;
     }
 
-    public double getEmissao() {
-        return this.emissao;
+    public int getYear() {
+        return year;
     }
 
-    public void setEmissao(double emissao) { this.emissao = emissao; }
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-    public abstract String listarAtributos();
+    public double getEmission() {
+        return this.emission;
+    }
+
+    public void setEmission(double emission) { this.emission = emission; }
+
 }

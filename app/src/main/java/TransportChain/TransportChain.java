@@ -1,7 +1,9 @@
 package TransportChain;
 
-// import Calculator.GEECalculator;
+import Calculator.GEECalculator;
+import DataIngest.Mode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransportChain {
@@ -9,7 +11,7 @@ public class TransportChain {
     private List<TransportChainElement> operations;
 
     public TransportChain(List<TransportChainElement> elements) {
-        this.operations = elements;
+        this.operations = elements != null ? elements : new ArrayList<>();
     }
 
     public List<TransportChainElement> getElements() {
@@ -26,66 +28,69 @@ public class TransportChain {
         return operations.remove(element);
     }
 
-    public boolean editarTransportOperation(String elementId,
-                                            double distanciaKm,
-                                            double cargaTotalCapacidade,
-                                            double fatorCarga,
-                                            double emptyReturn,
-                                            double consumoMedioE,
-                                            double fatorEmissaoTTW,
-                                            double fatorEmissaoWTT) {
+    public boolean editTransportOperation(String elementId,
+                                          Mode mode,
+                                          String vehicleCategory,
+                                          double distanceKm,
+                                          double totalLoadCapacity,
+                                          double loadFactor,
+                                          double emptyReturn,
+                                          double averageEnergyConsumption,
+                                          double emissionFactorTTW,
+                                          double emissionFactorWTT,
+                                          double emissionsPerTKm) {
 
-        if (distanciaKm < 0 || cargaTotalCapacidade < 0 || fatorCarga < 0 || emptyReturn < 0
-                || consumoMedioE < 0 || fatorEmissaoTTW < 0 || fatorEmissaoWTT < 0) {
+        if (distanceKm < 0 || totalLoadCapacity < 0 || loadFactor < 0 || emptyReturn < 0
+                || averageEnergyConsumption < 0 || emissionFactorTTW < 0 || emissionFactorWTT < 0 || emissionsPerTKm < 0) {
             return false;
         }
 
         for (TransportChainElement tc : operations) {
             if (tc instanceof TransportOperation to && to.getElementId().equals(elementId)) {
-                to.setDistanciaKm(distanciaKm);
-                to.setCargaTotalCapacidade(cargaTotalCapacidade);
-                to.setFatorCarga(fatorCarga);
+                to.setMode(mode);
+                to.setVehicleCategory(vehicleCategory);
+                to.setDistanceKm(distanceKm);
+                to.setTotalLoadCapacity(totalLoadCapacity);
+                to.setLoadFactor(loadFactor);
                 to.setEmptyReturn(emptyReturn);
-                to.setConsumoMedioE(consumoMedioE);
-                to.setFatorEmissaoTTW(fatorEmissaoTTW);
-                to.setFatorEmissaoWTT(fatorEmissaoWTT);
+                to.setAverageEnergyConsumption(averageEnergyConsumption);
+                to.setEmissionFactorTTW(emissionFactorTTW);
+                to.setEmissionFactorWTT(emissionFactorWTT);
+                to.setEmissionsPerTKm(emissionsPerTKm);
                 return true;
             }
         }
         return false;
     }
 
-
-    public boolean editarHubOperation(String elementId, double novoFatorEmissao, double novoConsumoEnergia) {
+    public boolean editHubOperation(String elementId, double newEmissionFactor, double newEnergyConsumption) {
         for (TransportChainElement tc : operations) {
             if (tc instanceof HubOperation ho && ho.getElementId().equals(elementId)) {
-                ho.setConsumoEnergia(novoConsumoEnergia);
-                ho.setFatorEmissao(novoFatorEmissao);
+                ho.setEmissionFactor(newEmissionFactor);
+                ho.setEnergyConsumption(newEnergyConsumption);
                 return true;
             }
         }
         return false;
     }
 
-    /*
-    public double calcularGEE_Total() {
+    public double calculateTotalGEE() {
         double total = 0.0;
 
-        if (operations == null || operations.isEmpty()) {
-            System.err.println("A cadeia de transporte está vazia.");
+        if (operations.isEmpty()) {
+            System.err.println("The transport chain is empty.");
             return 0.0;
         }
 
         GEECalculator calculator = new GEECalculator();
 
         try {
-            total = calculator.calcularGEE(this);
+            total = calculator.calculateGEE(this);
         } catch (Exception e) {
-            System.err.println("Erro ao calcular GEE total: " + e.getMessage());
+            System.err.println("Error calculating total GEE: " + e.getMessage());
             total = 0.0;
         }
 
         return total;
     }
-    */
 }

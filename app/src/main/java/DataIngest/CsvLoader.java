@@ -19,7 +19,7 @@ public class CsvLoader implements ICsvLoader {
                 data.add(values);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao ler o ficheiro: " + e.getMessage());
+            System.out.println("Error at reading the file " + e.getMessage());
         }
 
         return data;
