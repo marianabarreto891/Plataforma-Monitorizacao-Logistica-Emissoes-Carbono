@@ -1,23 +1,23 @@
 package Calculator;
 
-public class TOCalculator implements TOCalculations {
+public class TOCalculator implements ITOCalculations {
 
     private double ttw;
     private double wtt;
     private double wtw;
 
-    private double calcularTTW(double consumoEi, double efTTW) {
-        return consumoEi * efTTW;
+    private double calculateTTW(double consumptionEi, double efTTW) {
+        return consumptionEi * efTTW;
     }
 
-    private double calcularWTT(double consumoEi, double efWTT) {
-        return consumoEi * efWTT;
+    private double calculateWTT(double consumptionEi, double efWTT) {
+        return consumptionEi * efWTT;
     }
 
     @Override
-    public double calcularWtw(double consumoEi, double efTTW, double efWTT) {
+    public double calculateWTW(double consumptionEi, double efTTW, double efWTT) {
 
-        if (consumoEi < 0 || consumoEi > 10000) {
+        if (consumptionEi < 0 || consumptionEi > 10000000) {
             return -1;
         }
 
@@ -29,8 +29,8 @@ public class TOCalculator implements TOCalculations {
             return -1;
         }
 
-        this.ttw = calcularTTW(consumoEi, efTTW);
-        this.wtt = calcularWTT(consumoEi, efWTT);
+        this.ttw = calculateTTW(consumptionEi, efTTW);
+        this.wtt = calculateWTT(consumptionEi, efWTT);
 
         this.wtw = this.ttw + this.wtt;
 

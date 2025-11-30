@@ -6,15 +6,18 @@ package DataIngest;
 public class CsvValidator implements ICsvValidator {
     private static final String DELIMITER = ";";
     private static final int MINIMUM_NUMBER_ROWS = 2;
-    private static final int MODE_POSITION = 0;
-    private static  final int VEHICLE_CATEGORY_POSITION = 1;
-    private static final int FUEL_TYPE_POSITION = 2;
-    private static final int GEOGRAPHY_POSITION = 3;
-    private static final int PAYLOAD_POSITION = 4;
-    private static final int EMPTY_KM_POSITION = 5;
-    private static final int ACTIVITY_UNIT_POSITION = 6;
-    private static final int TOTAL_EMISSIONS_POSITION = 9;
-    private static final int YEAR_POSITION = 11;
+    private static final int CHAIN_ID_POSITION = 0;
+    private static final int ELEMENT_ID_POSITION= 1;
+    private static final int MODE_POSITION = 2;
+    private static  final int VEHICLE_CATEGORY_POSITION = 3;
+    private static final int FUEL_TYPE_POSITION = 4;
+    private static final int GEOGRAPHY_POSITION = 5;
+    private static final int MAXIMUM_CAPACITY_POSITION = 6;
+    private static final int PAYLOAD_POSITION = 7;
+    private static final int EMPTY_KM_POSITION = 8;
+    private static final int ACTIVITY_UNIT_POSITION = 9;
+    private static final int TOTAL_EMISSIONS_POSITION = 12;
+    private static final int YEAR_POSITION = 13;
     private static final String EXPECTED_ACTIVITY_UNIT = "kgCO2e/t¬∑km";
 
 
@@ -68,6 +71,14 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
 
+        if (!validateChainId(columns[CHAIN_ID_POSITION])) {
+            return false;
+        }
+
+        if (!validateElementId(columns[ELEMENT_ID_POSITION])) {
+            return false;
+        }
+
         if (!validateMode(columns[MODE_POSITION])) {
             return false;
         }
@@ -81,6 +92,10 @@ public class CsvValidator implements ICsvValidator {
         }
 
         if (!validateGeography(columns[GEOGRAPHY_POSITION])) {
+            return false;
+        }
+
+        if (!validateMaximumCapacity(columns[MAXIMUM_CAPACITY_POSITION])) {
             return false;
         }
 
@@ -270,5 +285,40 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
         return activityUnit.trim().equals(EXPECTED_ACTIVITY_UNIT);
+    }
+
+    /**
+     * Validates that the chain identifier is provided and is not empty.
+     *
+     * @param chainId The chain identifier string to verify.
+     * @return true if the chain ID is not null and contains non-whitespace characters.
+     */
+    private boolean validateChainId(String chainId) {
+        return chainId != null && !chainId.trim().isEmpty();
+    }
+
+    /**
+     * Validates that the element identifier is provided and is not empty.
+     *
+     * @param elementId The element identifier string to verify.
+     * @return true if the element ID is not null and contains non-whitespace characters.
+     */
+    private boolean validateElementId(String elementId) {
+        return elementId != null && !elementId.trim().isEmpty();
+    }
+
+    /**
+     * Validates that the maximum capacity is a valid positive numeric value.
+     *
+     * @param maxCapacity The maximum capacity string to parse.
+     * @return true if the capacity is successfully parsed as a positive number.
+     */
+    private boolean validateMaximumCapacity(String maxCapacity) {
+        try {
+            double capacityDouble = Double.parseDouble(maxCapacity.replace(",", ".").trim());
+            return capacityDouble > 0;
+        } catch (NumberFormatException | NullPointerException e) {
+            return false;
+        }
     }
 }
