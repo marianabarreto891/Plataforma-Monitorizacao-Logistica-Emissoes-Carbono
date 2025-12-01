@@ -6,7 +6,8 @@ package DataIngest;
 public enum Mode {
     ROAD("road"),
     AIR("air"),
-    SEA("sea");
+    SEA("sea"),
+    HUB("hub");
 
     private final String name;
 

@@ -14,10 +14,13 @@ public class CsvValidator implements ICsvValidator {
     private static final int GEOGRAPHY_POSITION = 5;
     private static final int MAXIMUM_CAPACITY_POSITION = 6;
     private static final int PAYLOAD_POSITION = 7;
-    private static final int EMPTY_KM_POSITION = 8;
-    private static final int ACTIVITY_UNIT_POSITION = 9;
-    private static final int TOTAL_EMISSIONS_POSITION = 12;
-    private static final int YEAR_POSITION = 13;
+    private static final int TOTAL_DISTANCE = 8;
+    private static final int EMPTY_KM_POSITION = 9;
+    private static final int ACTIVITY_UNIT_POSITION = 10;
+    private static final int TOTAL_EMISSIONS_POSITION = 14;
+    private static final int EMISSION_FACTOR_POSITION = 15;
+    private static final int ENERGY_CONSUMPTION_POSITION = 16;
+    private static final int YEAR_POSITION = 17;
     private static final String EXPECTED_ACTIVITY_UNIT = "kgCO2e/t¬∑km";
 
 
@@ -103,6 +106,10 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
 
+        if (!validateTotalDistance(columns[TOTAL_DISTANCE])) {
+            return false;
+        }
+
         if (!validateEmptyKmPresent(columns[EMPTY_KM_POSITION])) {
             return false;
         }
@@ -112,6 +119,12 @@ public class CsvValidator implements ICsvValidator {
         }
 
         if (!validateTotalEmissions(columns[TOTAL_EMISSIONS_POSITION])) {
+            return false;
+        }
+
+        //falta adicionar a validacao do emission_factor mas para isso preciso dos dados secundarios
+
+        if (!validateEnergyConsumption(columns[ENERGY_CONSUMPTION_POSITION])) {
             return false;
         }
 
@@ -321,4 +334,35 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
     }
+
+    /**
+     * Validates that the total distance is a positive numeric value, handling both comma and dot separators.
+     *
+     * @param totalDistance The distance string to parse.
+     * @return true if the distance is a valid positive number.
+     */
+    private boolean validateTotalDistance(String totalDistance) {
+        try {
+            double distanceDouble = Double.parseDouble(totalDistance.replace(",", ".").trim());
+            return distanceDouble > 0;
+        } catch (NumberFormatException | NullPointerException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Verifies that the energy consumption value is provided and is not empty.
+     *
+     * @param energyConsumption The energy consumption string to check.
+     * @return true if the value is not null and contains text.
+     */
+    private boolean validateEnergyConsumption(String energyConsumption) {
+        return energyConsumption != null && !energyConsumption.trim().isEmpty();
+    }
+
+    /*
+    private boolean validateEmissionFactor(String emissionFactor) {
+        //ir buscar a dados primarios
+    }
+     */
 }

@@ -12,11 +12,14 @@ public enum Header {
     GEOGRAPHY("Geography"),
     MAXIMUM_CAPACITY("MaximumCapacity"),
     PAYLOAD_T("Payload_t"),
+    TOTAL_DISTANCE("Total_distance"),
     EMPTY_KM_PCT("Empty_km_pct"),
     ACTIVITY_UNIT("Activity_Unit"),
     WTT_EMISSIONS_KG_PER_TKM("WTT_Emissions_kg_per_tkm"),
     TTW_EMISSIONS_KG_PER_TKM("TTW_Emissions_kg_per_tkm"),
     TOTAL_EMISSIONS_KG_PER_TKM("Total_Emissions_kg_per_tkm"),
+    EMISSION_FACTOR("EmissionFactor"),
+    ENERGY_CONSUMPTION("EnergyConsumption"),
     YEAR("Year");
 
 
