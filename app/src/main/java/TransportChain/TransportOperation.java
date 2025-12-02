@@ -12,7 +12,7 @@ public class TransportOperation extends TransportChainElement {
     private double averageEnergyConsumption;
     private double emissionFactorTTW;
     private double emissionFactorWTT;
-    private double emissionsPerTKm; // único atributo de emissões
+    private double emissionsPerTKm;
 
     public TransportOperation(String elementId, String chainId, String geography, int year,
                               Mode mode, String vehicleCategory,
