@@ -41,7 +41,7 @@ public class CsvValidatorTest {
 
     @Test
     public void testHeaderWithError() {
-        String invalidHeader = HEADER.replace("ChainID", "Chain_ID_Errado");
+        String invalidHeader = HEADER.replace("ChainId", "Chain_ID_Errado");
         String csv = invalidHeader + "\n" + VALID_ROW;
 
         assertFalse(validator.validate(csv));

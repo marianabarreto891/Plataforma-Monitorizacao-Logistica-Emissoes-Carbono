@@ -7,9 +7,9 @@ public class CsvValidator implements ICsvValidator {
     private static final String DELIMITER = ";";
     private static final int MINIMUM_NUMBER_ROWS = 2;
     private static final int CHAIN_ID_POSITION = 0;
-    private static final int ELEMENT_ID_POSITION= 1;
+    private static final int ELEMENT_ID_POSITION = 1;
     private static final int MODE_POSITION = 2;
-    private static  final int VEHICLE_CATEGORY_POSITION = 3;
+    private static final int VEHICLE_CATEGORY_POSITION = 3;
     private static final int FUEL_TYPE_POSITION = 4;
     private static final int GEOGRAPHY_POSITION = 5;
     private static final int MAXIMUM_CAPACITY_POSITION = 6;
@@ -17,10 +17,10 @@ public class CsvValidator implements ICsvValidator {
     private static final int TOTAL_DISTANCE = 8;
     private static final int EMPTY_KM_POSITION = 9;
     private static final int ACTIVITY_UNIT_POSITION = 10;
-    private static final int TOTAL_EMISSIONS_POSITION = 14;
-    private static final int EMISSION_FACTOR_POSITION = 15;
-    private static final int ENERGY_CONSUMPTION_POSITION = 16;
-    private static final int YEAR_POSITION = 17;
+    private static final int TOTAL_EMISSIONS_POSITION = 13;
+    private static final int EMISSION_FACTOR_POSITION = 14;
+    private static final int ENERGY_CONSUMPTION_POSITION = 15;
+    private static final int YEAR_POSITION = 16;
     private static final String EXPECTED_ACTIVITY_UNIT = "kgCO2e/t¬∑km";
 
 
@@ -122,7 +122,9 @@ public class CsvValidator implements ICsvValidator {
             return false;
         }
 
-        //falta adicionar a validacao do emission_factor mas para isso preciso dos dados secundarios
+        if (!validateEmissionFactor(columns[EMISSION_FACTOR_POSITION])) {
+            return false;
+        }
 
         if (!validateEnergyConsumption(columns[ENERGY_CONSUMPTION_POSITION])) {
             return false;
@@ -357,12 +359,28 @@ public class CsvValidator implements ICsvValidator {
      * @return true if the value is not null and contains text.
      */
     private boolean validateEnergyConsumption(String energyConsumption) {
-        return energyConsumption != null && !energyConsumption.trim().isEmpty();
+        if (energyConsumption == null || energyConsumption.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            double value = Double.parseDouble(energyConsumption.replace(",", ".").trim());
+            return value >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
-    /*
+
     private boolean validateEmissionFactor(String emissionFactor) {
-        //ir buscar a dados primarios
+        if (emissionFactor == null || emissionFactor.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            double value = Double.parseDouble(emissionFactor.replace(",", ".").trim());
+            return value >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
-     */
+
 }
