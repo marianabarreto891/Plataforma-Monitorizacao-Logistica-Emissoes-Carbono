@@ -1,5 +1,6 @@
 package Calculator;
 
+import DataIngest.FuelType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import TransportChain.*;
@@ -106,8 +107,11 @@ public class GEECalculatorTest {
                 "CHAIN005",
                 "PT",
                 2025,
-                0.0,    // emissionFactor
-                0.0     // energyConsumption
+                0.0,
+                0.0,
+                Mode.ROAD,
+                "truck",
+                FuelType.DIESEL
         );
 
         chain.addElement(minHO);
@@ -122,8 +126,11 @@ public class GEECalculatorTest {
                 "CHAIN006",
                 "PT",
                 2025,
-                999.0,   // emissionFactor
-                999.0    // energyConsumption
+                999.0,
+                999.0,
+                Mode.ROAD,
+                "truck",
+                FuelType.DIESEL
         );
 
         chain.addElement(maxHO);
@@ -139,7 +146,10 @@ public class GEECalculatorTest {
                 "PT",
                 2025,
                 -1.0,
-                -1.0
+                -1.0,
+                Mode.ROAD,
+                "truck",
+                FuelType.DIESEL
         );
 
         chain.addElement(invalidHO);
@@ -172,7 +182,10 @@ public class GEECalculatorTest {
                 "PT",
                 2025,
                 50.0,
-                5.0
+                5.0,
+                Mode.ROAD,
+                "truck",
+                FuelType.DIESEL
         );
 
         chain.addElement(mediumTO);
@@ -202,7 +215,10 @@ public class GEECalculatorTest {
                 "PT",
                 2025,
                 0.0,
-                0.0
+                0.0,
+                Mode.ROAD,
+                "truck",
+                FuelType.DIESEL
         );
 
         chain.addElement(zeroTO);
