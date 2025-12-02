@@ -35,16 +35,17 @@ public class GEECalculatorTest {
                 "CHAIN001",
                 "PT",
                 2025,
-                Mode.ROAD,               // example mode
-                "LightTruck",            // vehicle category
-                100.0,                   // distanceKm
-                10.0,                    // totalLoadCapacity
-                0.8,                     // loadFactor
-                0.1,                     // emptyReturn
-                5.0,                     // averageEnergyConsumption
-                0.1,                     // emissionFactorTTW
-                0.1,                     // emissionFactorWTT
-                0.1                      // emissionsPerTKm
+                Mode.ROAD,
+                "LightTruck",
+                100.0,
+                FuelType.GASOLINE,
+                10.0,
+                0.8,
+                0.1,
+                5.0,
+                0.1,
+                0.1,
+                0.1
         );
 
         chain.addElement(op);
@@ -62,6 +63,7 @@ public class GEECalculatorTest {
                 Mode.ROAD,
                 "Truck",
                 50.0,
+                FuelType.GASOLINE,
                 50.0,
                 0.5,
                 0.5,
@@ -86,6 +88,7 @@ public class GEECalculatorTest {
                 Mode.ROAD,
                 "Truck",
                 0.0,
+                FuelType.GASOLINE,
                 10.0,
                 -1.0,
                 0.5,
@@ -167,6 +170,7 @@ public class GEECalculatorTest {
                 Mode.ROAD,
                 "Truck",
                 50.0,
+                FuelType.DIESEL,
                 50.0,
                 0.5,
                 0.5,
@@ -206,7 +210,7 @@ public class GEECalculatorTest {
                 2025,
                 Mode.ROAD,
                 "Truck",
-                0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+                0.0, FuelType.DIESEL, 0.0,0.0,0.0,0.0,0.0,0.0,0.0
         );
 
         HubOperation zeroHO = new HubOperation(

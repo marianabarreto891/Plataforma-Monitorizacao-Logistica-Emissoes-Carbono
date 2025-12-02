@@ -1,11 +1,13 @@
 package TransportChain;
 
+import DataIngest.FuelType;
 import DataIngest.Mode;
 
 public class TransportOperation extends TransportChainElement {
     private Mode mode;
     private String vehicleCategory;
     private double distanceKm;
+    private FuelType fuelType;
     private double totalLoadCapacity;
     private double loadFactor;
     private double emptyReturn;
@@ -16,7 +18,7 @@ public class TransportOperation extends TransportChainElement {
 
     public TransportOperation(String elementId, String chainId, String geography, int year,
                               Mode mode, String vehicleCategory,
-                              double distanceKm, double totalLoadCapacity, double loadFactor,
+                              double distanceKm, FuelType fuelType, double totalLoadCapacity, double loadFactor,
                               double emptyReturn, double averageEnergyConsumption,
                               double efTTW, double efWTT, double emissionsPerTKm) {
 
@@ -25,6 +27,7 @@ public class TransportOperation extends TransportChainElement {
         this.mode = mode;
         this.vehicleCategory = vehicleCategory;
         this.distanceKm = distanceKm;
+        this.fuelType = fuelType;
         this.totalLoadCapacity = totalLoadCapacity;
         this.loadFactor = loadFactor;
         this.emptyReturn = emptyReturn;
