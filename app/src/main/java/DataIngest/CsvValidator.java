@@ -20,7 +20,8 @@ public class CsvValidator implements ICsvValidator {
     private static final int TOTAL_EMISSIONS_POSITION = 13;
     private static final int EMISSION_FACTOR_POSITION = 14;
     private static final int ENERGY_CONSUMPTION_POSITION = 15;
-    private static final int YEAR_POSITION = 16;
+    private static final int AVERAGE_CONSUMPTION_POSITION = 16;
+    private static final int YEAR_POSITION = 17;
     private static final String EXPECTED_ACTIVITY_UNIT = "kgCO2e/t¬∑km";
 
 
@@ -127,6 +128,10 @@ public class CsvValidator implements ICsvValidator {
         }
 
         if (!validateEnergyConsumption(columns[ENERGY_CONSUMPTION_POSITION])) {
+            return false;
+        }
+
+        if (!validateAverageConsumption(columns[AVERAGE_CONSUMPTION_POSITION])) {
             return false;
         }
 
@@ -377,6 +382,18 @@ public class CsvValidator implements ICsvValidator {
         }
         try {
             double value = Double.parseDouble(emissionFactor.replace(",", ".").trim());
+            return value >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean validateAverageConsumption(String averageConsumption) {
+        if (averageConsumption == null || averageConsumption.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            double value = Double.parseDouble(averageConsumption.replace(",", ".").trim());
             return value >= 0;
         } catch (NumberFormatException e) {
             return false;

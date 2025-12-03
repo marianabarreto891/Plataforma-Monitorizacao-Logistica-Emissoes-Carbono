@@ -20,6 +20,7 @@ public enum Header {
     TOTAL_EMISSIONS_KG_PER_TKM("Total_Emissions_kg_per_tkm"),
     EMISSION_FACTOR("EmissionFactor"),
     ENERGY_CONSUMPTION("EnergyConsumption"),
+    AVERAGE_CONSUMPTION("AverageConsumption"),
     YEAR("Year");
 
 
