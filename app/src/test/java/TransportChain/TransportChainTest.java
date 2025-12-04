@@ -1,5 +1,6 @@
 package TransportChain;
 
+import DataIngest.FuelType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import DataIngest.Mode;
@@ -21,7 +22,7 @@ class TransportChainTest {
     void testAddTransportOperation() {
         TransportOperation op = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                100.0, FuelType.GASOLINE,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
 
         chain.addElement(op);
@@ -40,7 +41,7 @@ class TransportChainTest {
 
     @Test
     void testAddHubOperation() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 100.0, 0.5);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 100.0, 0.5, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         assertEquals(1, chain.getElements().size());
@@ -51,7 +52,7 @@ class TransportChainTest {
     void testRemoveTransportOperation() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                100.0, FuelType.GASOLINE, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
         chain.addElement(to);
 
@@ -65,7 +66,7 @@ class TransportChainTest {
     void testRemoveNonExistentTransportOperation() {
         TransportOperation to = new TransportOperation(
                 "TO999", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                200.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                200.0, FuelType.GASOLINE,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
 
         boolean removed = chain.removeElement(to);
@@ -75,7 +76,7 @@ class TransportChainTest {
 
     @Test
     void testRemoveExistingHubOperation() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 100.0, 0.5);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 100.0, 0.5, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         boolean removed = chain.removeElement(ho);
@@ -86,7 +87,7 @@ class TransportChainTest {
 
     @Test
     void testRemoveNonExistentHubOperation() {
-        HubOperation ho = new HubOperation("HO999", "CHAIN001", "PT", 2025, 200.0, 0.5);
+        HubOperation ho = new HubOperation("HO999", "CHAIN001", "PT", 2025, 200.0, 0.5, Mode.SEA, "Central Operation", FuelType.DIESEL);
 
         boolean removed = chain.removeElement(ho);
         assertFalse(removed);
@@ -95,7 +96,7 @@ class TransportChainTest {
 
     @Test
     void testEditHubOperation_Success() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 0.5, 100.0);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 0.5, 100.0, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         boolean result = chain.editHubOperation("HO001", 20.0, 10.0);
@@ -106,7 +107,7 @@ class TransportChainTest {
 
     @Test
     void testEditHubOperation_Failure_NonexistentID() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 0.5, 100.0);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 0.5, 100.0, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         boolean result = chain.editHubOperation("HO999", 10.0, 20.0);
@@ -119,7 +120,7 @@ class TransportChainTest {
     void testEditTransportOperation_Failure_NegativeValue() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                100.0, FuelType.GASOLINE,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
         chain.addElement(to);
 
@@ -131,7 +132,7 @@ class TransportChainTest {
     void testEditTransportOperation_Success_PositiveValues() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                100.0, FuelType.DIESEL,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
         chain.addElement(to);
 
@@ -143,7 +144,7 @@ class TransportChainTest {
     void testEditTransportOperation_Failure_NonexistentID() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                100.0, FuelType.GASOLINE,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
         chain.addElement(to);
 
@@ -155,7 +156,7 @@ class TransportChainTest {
     void testEditTransportOperation_ZeroValues() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                100.0, FuelType.GASOLINE,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
         chain.addElement(to);
 
@@ -165,7 +166,7 @@ class TransportChainTest {
 
     @Test
     void testEditHubOperation_ZeroValues() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         boolean result = chain.editHubOperation("HO001", 0.0, 0.0);
@@ -176,7 +177,7 @@ class TransportChainTest {
 
     @Test
     void testEditHubOperation_NormalValues() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         boolean result = chain.editHubOperation("HO001", 0.5, 100.0);
@@ -187,7 +188,7 @@ class TransportChainTest {
 
     @Test
     void testEditHubOperation_MaxValues() {
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         boolean result = chain.editHubOperation("HO001", 1000.0, 1_000_000.0);
@@ -200,7 +201,7 @@ class TransportChainTest {
     void testEditTransportOperation_TypicalValues() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0
+                1000.0, FuelType.DIESEL,500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0
         );
         chain.addElement(to);
 
@@ -212,7 +213,7 @@ class TransportChainTest {
     void testEditTransportOperation_UpperLimitValues() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0
+                1000.0, FuelType.DIESEL,500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0
         );
         chain.addElement(to);
 
@@ -233,10 +234,10 @@ class TransportChainTest {
     void testCalculateTotalGEE_withValidOperations() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                1000.0, 500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0);
+                1000.0, FuelType.GASOLINE,500.0, 10.0, 5.0, 50.0, 2.0, 1.0, 0.0);
         chain.addElement(to);
 
-        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0);
+        HubOperation ho = new HubOperation("HO001", "CHAIN001", "PT", 2025, 10.0, 20.0, Mode.SEA, "Central Operation", FuelType.DIESEL);
         chain.addElement(ho);
 
         double total = chain.calculateTotalGEE();
@@ -248,7 +249,7 @@ class TransportChainTest {
     void testCalculateTotalGEE_withInvalidOperations() {
         TransportOperation to = new TransportOperation(
                 "TO001", "CHAIN001", "PT", 2025, Mode.ROAD, "Truck",
-                -100.0, 50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
+                -100.0, FuelType.GASOLINE,50.0, 0.8, 0.1, 5.0, 0.2, 0.1, 0.0
         );
         chain.addElement(to);
 
