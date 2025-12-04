@@ -376,6 +376,11 @@ public class CsvValidator implements ICsvValidator {
     }
 
 
+    /**
+     * Validates if the provided emission factor string represents a valid non-negative number.
+     * @param emissionFactor The string representation of the emission factor to validate.
+     * @return true if the string is a valid non-negative number, false otherwise.
+     */
     private boolean validateEmissionFactor(String emissionFactor) {
         if (emissionFactor == null || emissionFactor.trim().isEmpty()) {
             return false;
@@ -388,6 +393,12 @@ public class CsvValidator implements ICsvValidator {
         }
     }
 
+
+    /**
+     * Validates if the provided average consumption string represents a valid non-negative number.
+     * @param averageConsumption The string representation of the average energy consumption to validate.
+     * @return true if the string is a valid non-negative number, false otherwise.
+     */
     private boolean validateAverageConsumption(String averageConsumption) {
         if (averageConsumption == null || averageConsumption.trim().isEmpty()) {
             return false;

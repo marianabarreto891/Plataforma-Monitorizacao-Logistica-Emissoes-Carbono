@@ -1,6 +1,9 @@
 package Calculator;
 
-import TransportChain.*;
+import TransportChain.HubOperation;
+import TransportChain.TransportChain;
+import TransportChain.TransportChainElement;
+import TransportChain.TransportOperation;
 
 public class GEECalculator {
     private TOCalculator toCalculator;
@@ -8,6 +11,10 @@ public class GEECalculator {
     private CalculateActivityData activityCalculator;
     private ConsumptionEstimator consumptionEstimator;
 
+    
+    /**
+     * Initializes the GEE calculator and instantiates all necessary sub-calculators.
+     */
     public GEECalculator() {
         this.toCalculator = new TOCalculator();
         this.hoCalculator = new HOCalculator();
@@ -15,6 +22,11 @@ public class GEECalculator {
         this.consumptionEstimator = new ConsumptionEstimator();
     }
 
+    /**
+     * Calculates the total emissions for a specific transport chain by processing each element.
+     * @param chain The transport chain containing the list of operations to process.
+     * @return The total sum of emissions calculated for the entire chain.
+     */
     public double calculateGEE(TransportChain chain) {
         double total = 0.0;
 
