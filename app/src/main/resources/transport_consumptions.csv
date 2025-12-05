@@ -1,0 +1,7 @@
+mode;vehicle_category;fuel_id;consumption_unit;average_consumption;capacity_tons
+road;small_van;diesel;L/100km;7.5;1.2
+road;medium_truck;diesel;L/100km;22.0;7.5
+road;heavy_truck;diesel;L/100km;32.5;18.0
+road;small_van;electricity;kWh/100km;18.0;1.0
+sea;container_ship;lng;kg/100km;1400;20000
+air;cargo_plane;kerosene;kg/100km;3000;25000

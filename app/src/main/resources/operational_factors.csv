@@ -1,0 +1,6 @@
+mode;vehicle_category;default_load_factor;default_empty_return
+road;small_van;0.45;0.15
+road;medium_truck;0.55;0.10
+road;heavy_truck;0.65;0.12
+sea;container_ship;0.80;0.05
+air;cargo_plane;0.70;0.03

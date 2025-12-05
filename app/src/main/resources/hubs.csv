@@ -1,0 +1,5 @@
+hub_type;energy_id;unit;consumption_per_ton
+warehouse;electricity;kWh/ton;4.5
+distribution_center;electricity;kWh/ton;6.0
+port;electricity;kWh/ton;3.8
+airport;electricity;kWh/ton;5.5

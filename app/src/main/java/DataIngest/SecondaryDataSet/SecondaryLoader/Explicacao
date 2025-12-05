@@ -1,0 +1,28 @@
+
+-> Como obter uma instancia para obter dados secundarios:
+
+    try {
+        ISecondaryDataSet secondaryData = new SecondaryDataSet("data/secondary");
+    } catch (IllegalArgumentException e) {
+        System.err.println("ERRO A CARREGAR CSV SECUNDÁRIOS: " + e.getMessage());
+    }
+
+        - data/secondary é onde ficam os ficheiros e devem-se chamar:
+            fuels.csv, transport_consumptions.csv, operational_factors.csv e hubs.csv
+        - vamos fornecer os ficheiros para verem os parametros
+
+
+-> Exemplos de como ir buscar dados aos csv secundarios
+
+    double efTtw = secondaryData.getEfTtw(fuel);
+    double efWtt = secondaryData.getEfWtt(fuel);
+
+    double avgCons = secondaryData.getAverageConsumption(mode, vehicle);
+    double capacity = secondaryData.getCapacityTon(mode, vehicle);
+
+    double loadFactor = secondaryData.getLoadFactor(mode, vehicle);
+    double emptyPct = secondaryData.getEmptyReturnPct(mode, vehicle);
+
+
+
+

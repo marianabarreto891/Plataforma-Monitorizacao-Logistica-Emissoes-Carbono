@@ -82,13 +82,36 @@ class SecondaryDataSetTest {
     }
 
 
+    /** Empty or blank fuel type should return null */
     @Test
-    void getEfWttReturnsNullForEmptyOrBlankInput() {
+    void emptyOrBlankFuelTypeReturnsNull() {
         SecondaryDataSet dataSet = new SecondaryDataSet();
 
         assertNull(dataSet.getEfWtt(""));
         assertNull(dataSet.getEfWtt("   "));
     }
+
+
+    /** Malformed fuel type should not match any entry and return null */
+    @Test
+    void malformedFuelTypeReturnsNull() {
+        SecondaryDataSet dataSet = new SecondaryDataSet();
+
+        Double result = dataSet.getEfWtt("diesel##");
+
+        assertNull(result);
+    }
+
+    /** Non-existing mode/vehicle pair should return null */
+    @Test
+    void invalidModeAndVehicleReturnNull() {
+        SecondaryDataSet dataSet = new SecondaryDataSet();
+
+        Double result = dataSet.getAverageConsumption("road", "spaceship");
+
+        assertNull(result);
+    }
+
 
 
 }

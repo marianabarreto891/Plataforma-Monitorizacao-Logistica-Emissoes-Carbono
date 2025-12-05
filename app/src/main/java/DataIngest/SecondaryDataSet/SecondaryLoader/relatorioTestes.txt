@@ -1,0 +1,38 @@
+Para os métodos da classe SecondaryDataSet, como getEfWtt(fuelType), foi aplicada Equivalence Class Partitioning (ECP) com base em:
+
+fuelType pertencente ao conjunto de fuels definidos no CSV (classe válida);
+fuelType não existente no CSV (classe inválida, devolve null).
+
+Adicionalmente, foram testadas variações de maiúsculas/minúsculas ("diesel" / "DiEsEl") para confirmar que todos os casings pertencem
+à mesma classe de equivalência válida, dado que a API é case-insensitive.
+
+No que diz respeito a Boundary Value Analysis (BVA), estes métodos recebem String e não existem restrições numéricas nos argumentos.
+Assim, BVA é pouco relevante; o único “limite” potencial seria entre valores válidos e null/string vazia, que considerámos fora do
+domínio normal de utilização da API. E assume-se que o componente a utilizar este trate esse caso.
+
+
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+| Equivalence Class         | Criteria                      | Valid ECP                               | Invalid ECP                                   |
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+| Existing identifier       | Lookup key presence           | Identifier exists in dataset            | Identifier does not exist                     |
+|                           |                               | (e.g. "diesel")                          | (e.g. "wood")                                  |
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+| Case handling             | Case-insensitive behaviour    | Any casing variant returns same value   | None (API explicitly case-insensitive)         |
+|                           |                               | (e.g. "DiEsEl", "DIESEL")                |                                               |
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+| Null or empty input       | Input string validity         | None                                     | null, empty string "", or only whitespace      |
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+| Malformed string          | Unexpected characters         | Valid identifier characters only         | Invalid forms such as "diesel##"               |
+|                           |                               |                                          |                                               |
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+| Composite keys            | Mode + vehicleCategory pairs  | Keys that exist in dataset               | Keys not present in dataset                    |
+|                           |                               | (e.g. "road_van")                        | (e.g. "road_plane")                            |
++---------------------------+-------------------------------+-----------------------------------------+-----------------------------------------------+
+
+Boundary Value Analysis does not apply to this component.
+
+All public methods of SecondaryDataSet receive string identifiers,
+not numeric values with defined ranges. Therefore, there are no
+numeric boundaries to test. The only meaningful distinction is
+between valid identifiers and invalid identifiers, already covered
+through Equivalence Class Partitioning.
