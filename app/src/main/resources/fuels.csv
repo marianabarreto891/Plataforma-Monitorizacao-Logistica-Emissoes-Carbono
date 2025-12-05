@@ -1,0 +1,5 @@
+fuel_id;fuel_name;unit;ef_ttw;ef_wtt
+diesel;Diesel;kgCO2e/l;3.16;0.45
+gasoline;Gasoline;kgCO2e/l;2.90;0.40
+electricity;Electricity;kWh;0.00;0.12
+lng;Liquified Natural Gas;kgCO2e/kg;2.10;0.30
